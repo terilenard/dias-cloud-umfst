@@ -1,7 +1,7 @@
 /*
  * Copyright 2020 Bosch.IO GmbH. All rights reserved.
  */
-package com.bosch.iothub.examples;
+package maven.consumer.hono;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
