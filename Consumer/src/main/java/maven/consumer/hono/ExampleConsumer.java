@@ -3,18 +3,9 @@
  */
 package maven.consumer.hono;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import maven.consumer.influxdb.service.InfluxService;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -154,27 +145,7 @@ public class ExampleConsumer {
         final String deviceId = MessageHelper.getDeviceId(msg);
         String content = ((Data) msg.getBody()).getValue().toString();
         LOG.info("Received message [device: {}, content-type: {}]: {}", deviceId, msg.getContentType(), content);
-        LOG.info("... with application properties: {}", msg.getApplicationProperties());
-    }
-
-    /**
-     * To get a map from JSON dictionary string
-     *
-     * @param dict Target JSON dictionary string
-     * @return the mapped data set
-     */
-    @SuppressWarnings("unchecked")
-    private Map<String, Object> mapJSONDictionary(String dict) {
-        Map<String, Object> map = null;
-        try {
-            map = new ObjectMapper().readValue(dict, HashMap.class);
-        } catch (JsonMappingException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        } catch (JsonProcessingException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        return map;
+        influxService.writeSingleMetricToInfluxDB(influxDB, "logs", "logs", content);
+        LOG.info("Wrote {} to InfluxDB", content);
     }
 }
