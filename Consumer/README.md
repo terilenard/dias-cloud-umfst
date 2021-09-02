@@ -27,9 +27,13 @@ docker run -p 8081:8081 -t hono-influxdb-connector --hono.client.tlsEnabled=true
 The example consumer application needs a few parameters set to run. Please make sure the following are set correctly:
 
 *hono.client.username: The username for the IoT Hub messaging endpoint 
+
 *hono.client.password: The password for the IoT Hub messaging endpoint
+
 *tenant.id: The tenant ID 
+
 *server.url: The target InfluxDB URL address (Default: http://localhost:8086)
+
 *device.id: Id of a device registerd into IoT Hub, from which the telemetry comes
 
 All the information needed for setting these parameters can be found in the 'Credentials' information of a IoT Hub service subscription information.
